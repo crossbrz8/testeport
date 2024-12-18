@@ -24,16 +24,16 @@ export default class Column {
       target: 0,
       last: 0,
       velocity: 0,
-      lerp: 0.5,
-      maxSpeed: 160
+      lerp: 0.6,
+      maxSpeed: 200
     };
     
     // Velocity and speed controls
     this.velocityConfig = {
-      default: 0.8,
-      max: 1.5,
-      increment: 0.15,
-      maxVelocity: 4,
+      default: 1.2,
+      max: 2.0,
+      increment: 0.2,
+      maxVelocity: 5,
       current: 0
     };
     
@@ -509,9 +509,11 @@ export default class Column {
     
     const isReverse = this.reverse;
     const viewportHeight = window.innerHeight;
-    const baseAmplitude = 20;
-    const velocityMultiplier = 9;
-    const amplitude = baseAmplitude + velocityMultiplier * Math.min(this.scroll.velocity, 1.0);
+    // Increase base amplitude for more pronounced effect
+    const baseAmplitude = 35;
+    // Increase velocity multiplier for more dramatic movement
+    const velocityMultiplier = 15;
+    const amplitude = baseAmplitude + velocityMultiplier * Math.min(this.scroll.velocity, 1.5);
     const y = isReverse ? scroll : -scroll;
     
     const len = this.lines.length;
@@ -519,7 +521,8 @@ export default class Column {
       const line = this.lines[i];
       const posY = line.top + y;
       
-      if (posY < -150 || posY > viewportHeight + 150) {
+      // Increase the visible range for the effect
+      if (posY < -200 || posY > viewportHeight + 200) {
         if (line.transform !== null) {
           line.el.style.transform = 'translate3d(0, 0, 0)';
           line.transform = null;
@@ -528,11 +531,12 @@ export default class Column {
       }
       
       const progress = Math.min(Math.max(0, posY / viewportHeight), 1);
-      const x = isReverse ? 
-        Math.cos(progress * Math.PI) * amplitude :
-        Math.sin(progress * Math.PI) * amplitude;
+      // Add more dramatic wave effect
+      const yOffset = isReverse ? 
+        Math.cos(progress * Math.PI * 1.2) * amplitude :
+        Math.sin(progress * Math.PI * 1.2) * amplitude;
       
-      const newTransform = `translate3d(${x}px, 0, 0)`;
+      const newTransform = `translate3d(0, ${yOffset}px, 0)`;
       if (line.transform !== newTransform) {
         line.el.style.transform = newTransform;
         line.transform = newTransform;
