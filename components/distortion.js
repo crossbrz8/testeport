@@ -19,7 +19,7 @@ let smoothVelocity = { value: 0 }
 let velocityTween
 
 // Constants for better performance
-const SCROLL_VELOCITY_THRESHOLD = 0.001;
+const SCROLL_VELOCITY_THRESHOLD = 0.0003;
 const UPDATE_INTERVAL = 1000 / 60; // 60fps cap
 const CAMERA_POS = 500;
 const GEOMETRY_SEGMENTS = 32; // Reduced from 100 for better performance
@@ -191,15 +191,15 @@ const render = (time = 0) => {
   lastRenderTime = time;
   time /= 1000;
   
-  const targetVelocity = sharedScrollState?.velocity || 0;
+  const targetVelocity = (sharedScrollState?.velocity || 0) * 4.0;
   
   if (Math.abs(targetVelocity - smoothVelocity.value) > SCROLL_VELOCITY_THRESHOLD) {
     if (velocityTween) velocityTween.kill();
     
     velocityTween = gsap.to(smoothVelocity, {
       value: targetVelocity,
-      duration: 0.2,
-      ease: "power2.out",
+      duration: 0.1,
+      ease: "none",
       overwrite: true
     });
   }

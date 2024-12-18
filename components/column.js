@@ -24,16 +24,16 @@ export default class Column {
       target: 0,
       last: 0,
       velocity: 0,
-      lerp: 0.4,
-      maxSpeed: 120
+      lerp: 0.5,
+      maxSpeed: 160
     };
     
     // Velocity and speed controls
     this.velocityConfig = {
-      default: 0.5,
-      max: 1,
-      increment: 0.1,
-      maxVelocity: 3,
+      default: 0.8,
+      max: 1.5,
+      increment: 0.15,
+      maxVelocity: 4,
       current: 0
     };
     
@@ -304,15 +304,15 @@ export default class Column {
     this.isScrolling = true;
     
     const direction = this.reverse ? 1 : -1;
-    // Reduce scroll multiplier and add speed limit
-    const scrollMultiplier = 0.5;
-    const maxScroll = 60;
+    // Increase scroll multiplier and add speed limit
+    const scrollMultiplier = 0.8;
+    const maxScroll = 90;
     const scrollAmount = Math.min(Math.abs(delta), maxScroll) * Math.sign(delta) * direction * scrollMultiplier;
     
     gsap.to(this.scroll, {
       target: this.scroll.target + scrollAmount,
-      duration: 0.3,
-      ease: "power2.out",
+      duration: 0.25,
+      ease: "power1.out",
       overwrite: true,
       onUpdate: () => {
         if (this.scrollState) {
@@ -509,9 +509,9 @@ export default class Column {
     
     const isReverse = this.reverse;
     const viewportHeight = window.innerHeight;
-    const baseAmplitude = 15;
-    const velocityMultiplier = 6; // Reduced multiplier
-    const amplitude = baseAmplitude + velocityMultiplier * Math.min(this.scroll.velocity, 0.8); // Limit max amplitude
+    const baseAmplitude = 20;
+    const velocityMultiplier = 9;
+    const amplitude = baseAmplitude + velocityMultiplier * Math.min(this.scroll.velocity, 1.0);
     const y = isReverse ? scroll : -scroll;
     
     const len = this.lines.length;
@@ -547,7 +547,7 @@ export default class Column {
     if (this.scrollState) {
       this.scrollState.current = this.current;
       this.scrollState.target = this.target;
-      this.scrollState.velocity = (this.current - this.prev) * 2; // Increased velocity
+      this.scrollState.velocity = (this.current - this.prev) * 2.5;
     }
     
     this.prev = this.current;
