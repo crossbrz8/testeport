@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>FM©V25</title>
+  </head>
+  <body class="bg-primary p-5 md:h-screen overflow-x-hidden md:overflow-hidden">    
+    <canvas id="webgl" class="fixed inset-0 w-full h-full pointer-events-none"></canvas>
+    
+    <section id="loader" class="w-full h-dvh md:h-screen fixed top-0 left-0 bg-primary z-50">
+      <div class="loader-container w-full h-full flex items-center justify-center relative">
+        <div class="absolute top-5 left-5">
+          <svg class="loader-item" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="9" width="1" height="20" fill="#5C665E"/>
+            <rect y="11" width="1" height="20" transform="rotate(-90 0 11)" fill="#5C665E"/>
+            </svg>            
+        </div>
+        <div class="absolute top-5 right-5">
+          <svg class="loader-item" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="9" width="1" height="20" fill="#5C665E"/>
+            <rect y="11" width="1" height="20" transform="rotate(-90 0 11)" fill="#5C665E"/>
+            </svg>            
+        </div>
+        <div class="absolute bottom-5 left-5">
+          <svg class="loader-item" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="9" width="1" height="20" fill="#5C665E"/>
+            <rect y="11" width="1" height="20" transform="rotate(-90 0 11)" fill="#5C665E"/>
+            </svg>            
+        </div>
+        <div class="absolute bottom-5 right-5">
+          <svg class="loader-item" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="9" width="1" height="20" fill="#5C665E"/>
+            <rect y="11" width="1" height="20" transform="rotate(-90 0 11)" fill="#5C665E"/>
+            </svg>            
+        </div>
+        <svg class="main-loader opacity-0" width="200" height="100" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <mask id="mask0_21_535" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="100">
+              <rect width="200" height="100" fill="white"/>
+            </mask>
+            <pattern id="linePattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+              <g class="moving-lines">
+                <rect x="70" y="-36.3525" width="1" height="200" transform="rotate(-30 70 -36.3525)" fill="#5C665E"/>
+                <rect x="60" y="-36.3525" width="1" height="200" transform="rotate(-30 60 -36.3525)" fill="#5C665E"/>
+                <rect x="50" y="-36.3525" width="1" height="200" transform="rotate(-30 50 -36.3525)" fill="#5C665E"/>
+                <rect x="40" y="-36.3525" width="1" height="200" transform="rotate(-30 40 -36.3525)" fill="#5C665E"/>
+                <rect x="30" y="-36.3525" width="1" height="200" transform="rotate(-30 30 -36.3525)" fill="#5C665E"/>
+                <rect x="20" y="-36.3525" width="1" height="200" transform="rotate(-30 20 -36.3525)" fill="#5C665E"/>
+                <rect y="-36.3525" width="1" height="200" transform="rotate(-30 0 -36.3525)" fill="#5C665E"/>
+                <rect x="10" y="-36.3525" width="1" height="200" transform="rotate(-30 10 -36.3525)" fill="#5C665E"/>
+                <rect x="-10" y="-36.3525" width="1" height="200" transform="rotate(-30 -10 -36.3525)" fill="#5C665E"/>
+                <rect x="-20" y="-36.3525" width="1" height="200" transform="rotate(-30 -20 -36.3525)" fill="#5C665E"/>
+                <rect x="-30" y="-36.3525" width="1" height="200" transform="rotate(-30 -30 -36.3525)" fill="#5C665E"/>
+                <rect x="-40" y="-36.3525" width="1" height="200" transform="rotate(-30 -40 -36.3525)" fill="#5C665E"/>
+                <rect x="-50" y="-36.3525" width="1" height="200" transform="rotate(-30 -50 -36.3525)" fill="#5C665E"/>
+                <rect x="-60" y="-36.3525" width="1" height="200" transform="rotate(-30 -60 -36.3525)" fill="#5C665E"/>
+                <rect x="-70" y="-36.3525" width="1" height="200" transform="rotate(-30 -70 -36.3525)" fill="#5C665E"/>
+                <rect x="-80" y="-36.3525" width="1" height="200" transform="rotate(-30 -80 -36.3525)" fill="#5C665E"/>
+                <rect x="180" y="-36.3525" width="1" height="200" transform="rotate(-30 180 -36.3525)" fill="#5C665E"/>
+                <rect x="170" y="-36.3525" width="1" height="200" transform="rotate(-30 170 -36.3525)" fill="#5C665E"/>
+                <rect x="160" y="-36.3525" width="1" height="200" transform="rotate(-30 160 -36.3525)" fill="#5C665E"/>
+                <rect x="150" y="-36.3525" width="1" height="200" transform="rotate(-30 150 -36.3525)" fill="#5C665E"/>
+                <rect x="140" y="-36.3525" width="1" height="200" transform="rotate(-30 140 -36.3525)" fill="#5C665E"/>
+                <rect x="130" y="-36.3525" width="1" height="200" transform="rotate(-30 130 -36.3525)" fill="#5C665E"/>
+                <rect x="110" y="-36.3525" width="1" height="200" transform="rotate(-30 110 -36.3525)" fill="#5C665E"/>
+                <rect x="120" y="-36.3525" width="1" height="200" transform="rotate(-30 120 -36.3525)" fill="#5C665E"/>
+                <rect x="100" y="-36.3525" width="1" height="200" transform="rotate(-30 100 -36.3525)" fill="#5C665E"/>
+                <rect x="90" y="-36.3525" width="1" height="200" transform="rotate(-30 90 -36.3525)" fill="#5C665E"/>
+                <rect x="80" y="-36.3525" width="1" height="200" transform="rotate(-30 80 -36.3525)" fill="#5C665E"/>
+              </g>
+            </pattern>
+          </defs>
+          <rect mask="url(#mask0_21_535)" width="200" height="100" fill="url(#linePattern)"/>
+        </svg>          
+      </div>
+    </section>
+    <div class="flex flex-col md:flex-row max-w-4xl mx-auto overflow-x-hidden overflow-hidden">
+      <div class="flex flex-col-reverse md:flex-row w-full gap-3.5 xl:gap-10">
+        <!-- Projects Section -->
+        <section id="projects" class="relative z-10">
+          <div class="relative isolate container-projects">
+            <div class="cursor hidden md:block absolute top-0 left-0 opacity-0 scale-0 bg-secondary text-primary text-xs leading-xs font-martianmono font-normal rounded-full px-2 py-1 uppercase z-50 pointer-events-none">
+              <p class="text-nowrap text-for-cursor text-center"></p>
+            </div>
+            <div class="swiper w-[150px] sm:w-auto sm:h-auto h-[150px] relative z-10">
+              <ul class="projects-lists flex swiper-wrapper relative md:flex-col w-[140px] md:w-[120px] xl:w-[200px] gap-2.5 md:gap-5 font-martianmono font-normal text-xs text-secondary">
+              </ul>
+            </div>
+          </div>
+          <dialog id="project-dialog" class="w-full m-auto sm:m-5 invisible p-2.5 sm:p-5 rounded bg-gray text-secondary sm:h-[700px] h-screen sm:min-h-[90vh] xl:w-[540px] sm:flex justify-center items-start sm:w-[540px]" >
+            <div class="dialog-content w-full flex flex-col h-full">
+              <div class="flex justify-between mb-5">
+                <h2 class="text-5xl font-roslindale project-title sm:max-w-[243px]"></h2>
+                <button class="close-dialog size-10 bg-secondary flex items-center justify-center rounded">
+                  <svg class="flex-shrink-0" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="7.22168" y="8.63604" width="1" height="20" transform="rotate(-45 7.22168 8.63604)" fill="#5C665E"/>
+                    <rect x="8.63623" y="22.7782" width="1" height="20" transform="rotate(-135 8.63623 22.7782)" fill="#5C665E"/>
+                  </svg>                    
+                </button>
+              </div>
+              <hr class="dividerModal border-none w-full h-px mb-10 mt-8 xl:mb-11">
+              <div class="project-content text-secondary flex flex-col w-full h-full justify-between">
+                <div class="project-header">
+                  <div class="flex flex-row items-start justify-between xl:gap-2.5 gap-9 font-helvetica text-sm">
+                    <div class="flex flex-col gap-1">
+                      <p class="uppercase font-martianmono text-nowrap text-primary text-xs">Project, Year</p>
+                      <p class="uppercase font-martianmono text-primary text-xs">Role</p>
+                    </div>
+                    <div class="flex items-start flex-col md:flex-row gap-6">
+                      <div class="flex flex-col gap-1">
+                        <p class="project-year text-xs2 font-normal font-helvetica text-secondary"></p>
+                        <p class="project-roles text-xs2 font-normal text-wrap font-helvetica text-secondary"></p>
+                      </div>
+                      <button id="button-launch-project" class="font-martianmono group relative isolate font-normal border uppercase transition-colors duration-150 rounded-full border-secondary px-2 py-1 text-xs leading-xs text-secondary text-nowrap text-center">
+                        <span class="relative z-10 rounded-full group-hover:text-primary transition-colors delay-0">Launch project</span>
+                        <!-- The hover effect container will be inserted here -->
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="project-media overflow-hidden sm:w-[500px] h-auto">
+                  <div class="project-images flex relative w-full flex-col items-end justify-end sm:max-h-[calc(100vh-300px)] h-[214px] sm:h-[320px] rounded-[4px] overflow-hidden object-contain aspect-square">
+                    <!-- Images will be inserted here-->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </dialog>
+        </section>
+      <!-- Hero Section -->
+      <header id="hero-section" class="w-full xl:min-h-dvh text-secondary" aria-labelledby="hero-heading">
+        <div class="max-w-[435px] md:max-w-[600px] flex flex-col justify-between relative md:h-[calc(100vh-20px)]">
+          <div id="hero-content">
+            <h1 id="hero-heading" class="font-roslindale md:text-4xl xl:text-7xl font-light text-6xl mb-1 w-fit overflow-hidden" data-splitting data-splitting-type="chars">FM©V25 
+              <span class="sr-only">FM©V25</span>
+            </h1>
+            <ul id="hero-list" class="mb-6 overflow-hidden font-martianmono text-xs font-normal grid xl:grid-cols-2 xl:place-content-center">
+              <li class="overflow-hidden w-fit">
+                <span class="font-martianmono">CREATIVE DIRECTOR</span>
+              </li>
+              <li class="overflow-hidden w-fit">
+                <span class="font-martianmono">DESIGN LEAD</span>
+              </li>
+              <li class="overflow-hidden w-fit mt-5 xl:mt-0">
+                <a href="https://www.apple.com" target="_blank" class="group">
+                <span class="font-martianmono">FORMER A/D AT </span>
+                <span class="overflow-hidden inline-flex h-fit relative cursor-pointer">
+                  APPLE
+                  <span class="absolute hidden lg:block overflow-hidden bottom-1 left-0 w-full h-px bg-secondary opacity-100
+                  transform translate-x-[-100%] transition-transform duration-300
+                  group-hover:animate-slide-in-out">
+                  </span>
+                  </span>
+                </a>
+              </li>
+              <li class="overflow-hidden w-fit">
+                <a href="https://www.awwwards.com" target="_blank" class="group">
+                <span class="font-martianmono">FORMER JURY AT </span>
+                <span class="overflow-hidden inline-flex h-fit relative cursor-pointer">
+                  AWWWARDS
+                  <span class="absolute hidden lg:block overflow-hidden bottom-1 left-0 w-full h-px bg-secondary opacity-100
+                  transform translate-x-[-100%] transition-transform duration-300
+                  group-hover:animate-slide-in-out">
+                  </span>
+                  </span>
+                </a>
+              </li>
+            </ul>
+            <div class="overflow-hidden">
+              <p id="hero-email" class="text-xs md:flex-row flex w-full flex-col font-martianmono md:text-nowrap font-normal">
+                AVAILABLE FOR FREELANCE PROJECTS:
+                <span class="overflow-hidden">
+                  <a class="font-martianmono font-normal w-full relative overflow-hidden group" 
+                    href="mailto:HELLO@FMEDEIROS.COM" 
+                    aria-label="Send email to HELLO@FMEDEIROS.COM">
+                    HELLO@FMEDEIROS.COM
+                  <span class="absolute hidden lg:block overflow-hidden bottom-0 left-0 w-full h-px bg-secondary opacity-100
+                      transform translate-x-[-100%] transition-transform duration-300
+                      group-hover:animate-slide-in-out">
+                  </span>
+                </a>
+              </span>
+              </p>
+            </div>
+          </div>
+          <nav id="social-links" class="font-martianmono text-xs md:w-full md:max-w-[350px] xl:max-w-[435px] hidden md:block font-normal md:mt-10 mb-5 w-full">
+            <ul class="grid grid-cols-3 place-content-center md:gap-x-5 md:text-nowrap xl:gap-x-0 xl:text-wrap [&>li]:h-6">
+              <li class="overflow-hidden w-fit">
+                <a class="relative w-fit overflow-hidden group" href="https://www.linkedin.com/in/" target="_blank">LINKED IN
+                    <span class="absolute hidden lg:block overflow-hidden bottom-0 left-0 w-full h-px bg-secondary opacity-100
+                      transform translate-x-[-100%] transition-transform duration-300
+                      group-hover:animate-slide-in-out">
+                  </span>
+                </a>
+              </li>
+              <li class="overflow-hidden w-fit">
+                <a class="relative overflow-hidden group" href="https://www.behance.net/" target="_blank">BEHANCE
+                    <span class="absolute hidden lg:block overflow-hidden bottom-0 left-0 w-full h-px bg-secondary opacity-100
+                      transform translate-x-[-100%] transition-transform duration-300
+                      group-hover:animate-slide-in-out">
+                  </span>
+                </a>
+              </li>
+              <li class="overflow-hidden w-fit">
+                <a class="relative overflow-hidden group" href="https://www.instagram.com/" target="_blank">INSTAGRAM
+                    <span class="absolute hidden lg:block overflow-hidden bottom-0 left-0 w-full h-px bg-secondary opacity-100
+                      transform translate-x-[-100%] transition-transform duration-300
+                      group-hover:animate-slide-in-out">
+                  </span>
+                </a>
+              </li>
+              <li class="overflow-hidden w-fit">
+                <a class="relative overflow-hidden group" href="https://www.awwwards.com/" target="_blank">AWWWARDS
+                    <span class="absolute hidden lg:block overflow-hidden bottom-0 left-0 w-full h-px bg-secondary opacity-100
+                      transform translate-x-[-100%] transition-transform duration-300
+                      group-hover:animate-slide-in-out">
+                  </span>
+                </a>
+              </li>
+              <li class="overflow-hidden w-fit">
+                <a class="relative overflow-hidden group" href="https://dribbble.com/" target="_blank">DRIBBBLE
+                    <span class="absolute hidden lg:block overflow-hidden bottom-0 left-0 w-full h-px bg-secondary opacity-100
+                      transform translate-x-[-100%] transition-transform duration-300
+                      group-hover:animate-slide-in-out">
+                  </span>
+                </a>
+              </li>
+              <li class="overflow-hidden w-fit">
+                <a class="relative overflow-hidden group" href="https://www.sveep.com/" target="_blank">SAVEE
+                    <span class="absolute hidden lg:block overflow-hidden bottom-0 left-0 w-full h-px bg-secondary opacity-100
+                      transform translate-x-[-100%] transition-transform duration-300
+                      group-hover:animate-slide-in-out">
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    </div>
+
+    <!-- Bio section -->
+    <main id="bio-section" class="bio-section xl:h-screen text-secondary md:w-[450px] xl:w-[700px]" aria-label="Biography and Experience">
+      <p class="bio-description w-full md:w-[300px] xl:w-full text-2xl font-normal font-helvetica pt-40 xl:pt-24 text-justify whitespace-pre-wrap">
+        Felipe Medeiros is a versatile Creative Director and Design Lead with over 20 years of experience in the digital industry, working between Miami and Madrid. His work thrives at the intersection of creativity, digital innovation, and contemporary culture, with a focus on crafting narratives and systems for Brand, Interactive, and Product Design. Driven by a strong passion for problem-solving and a relentless drive to achieve results, his work has earned recognition from prestigious industry awards, including The FWA, Awwwards, Muz.li, Addys, and CSSDA.
+      </p>
+      <hr class="divider w-full h-px bg-opacity-40 my-[60px]">
+      <section id="experience" class="flex flex-col">
+        <h2 class="text-xs leading-xs mb-10 font-normal font-martianmono uppercase">(&nbsp;&nbsp;Experience&nbsp;&nbsp;)</h2>
+        <ul class="flex flex-col gap-5">
+          <li class="flex items-start justify-between font-helvetica font-normal text-xs md:text-sm">
+            <div class="flex flex-col gap-1">
+              <p class="text-secondary">Instrument (Contract)</p>
+              <span class="text-gray">Associate Design Lead</span>
+            </div>
+            <span class="text-secondary">2023-2024</span>
+          </li>
+          <li class="flex items-start justify-between font-helvetica font-normal text-xs md:text-sm">
+            <div class="flex flex-col gap-1">
+              <p class="text-secondary">Apple</p>
+              <span class="text-gray">Art Director</span>
+            </div>
+            <span class="text-secondary">2022</span>
+          </li>
+          <li class="flex items-start justify-between font-helvetica font-normal text-xs md:text-sm">
+            <div class="flex flex-col gap-1">
+              <p class="text-secondary">Cappen</p>
+              <span class="text-gray">Founder - Creative/Art Director</span>
+            </div>
+            <span class="text-secondary">2006-Present</span>
+          </li>
+          <li class="flex items-start justify-between font-helvetica font-normal text-xs md:text-sm">
+            <div class="flex flex-col gap-1">
+              <p class="text-secondary">North Kingdom</p>
+              <span class="text-gray">Associate Design Lead</span>
+            </div>
+            <span class="text-secondary Digital Strategist">2014</span>
+          </li>
+        </ul>
+      </section>
+      <hr class="divider w-full h-px my-[60px]">
+      <section id="brands" class="flex flex-col">
+        <h3 class="text-xs leading-xs mb-10 font-normal font-martianmono uppercase">(&nbsp;&nbsp;Brands&nbsp;&nbsp;)</h3>
+        <p class="text-sm font-helvetica font-normal">
+          Apple, Nike, McDonalds, Gatorade, Royal Caribbean, Nickelodeon, Microsoft, Luka Dončić, Vivo, Claro, Amanda Braga, Neondoor, Beach Park, Samsung, JCPM, Unicef, Primrose Schools, ServiceNow, Our Today, Iquine and more.
+        </p>
+      </section>
+      <hr class="divider w-full h-px my-[60px]">
+      <section id="services" class="flex flex-col">
+        <h3 class="text-xs leading-xs mb-10 font-normal font-martianmono uppercase">(&nbsp;&nbsp;KEY SERVICES&nbsp;&nbsp;)</h3>
+        <p class="text-sm font-helvetica font-normal">
+          Creative Direction, Design Leadership, Art Direction, User Experience Design, User Interface Design, Consultancy, Branding, Naming, Digital Strategy & more.
+        </p>
+      </section>
+      <hr class="divider w-full h-px my-[60px]">
+      <section id="awards" class="flex flex-col">
+        <h3 class="text-xs leading-xs mb-10 font-normal font-martianmono uppercase">(&nbsp;&nbsp;AWARDS & RECOGNITION&nbsp;&nbsp;)</h3>
+        <div class="flex flex-col gap-2.5">
+          <div class="flex items-center justify-between">
+            <p class="text-sm">Awwwards</p>
+            <span class="text-[14px] leading-[18.2px] text-right text-gray">4x SOD, 11x HN</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <p class="text-sm">The FWA</p>
+            <span class="text-[14px] leading-[18.2px] text-right text-gray">2x SOD</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <p class="text-sm">Addy Awards</p>
+            <span class="text-[14px] leading-[18.2px] text-right text-gray">4 Addys</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <p class="text-sm">Muz.li</p>
+            <span class="text-[14px] leading-[18.2px] text-right text-gray">3x Cover</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <p class="text-sm">Opetron</p>
+            <span class="text-[14px] leading-[18.2px] text-right text-gray">2x SOD</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <p class="text-sm">CSS Awards</p>
+            <span class="text-[14px] leading-[18.2px] text-right text-gray">2x SOD</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <p class="text-sm">Design Rush</p>
+            <span class="text-[14px] leading-[18.2px] text-right text-gray">1x SOD</span>
+          </div>
+        </div>
+      </section>
+      <hr class="divider w-full h-px my-[60px]">
+      <nav id="mobile-social-links" class="font-martianmono text-xs max-w-[435px] mx-auto font-normal items-center justify-center h-full pt-[100px] md:hidden w-full">
+        <ul class="grid grid-cols-3 place-content-center items-center justify-center w-full">
+          <li><a href="https://www.linkedin.com/in/" target="_blank">LINKED IN</a></li>
+          <li><a href="https://www.behance.net/" target="_blank">BEHANCE</a></li>
+          <li><a href="https://www.instagram.com/" target="_blank">INSTAGRAM</a></li>
+          <li><a href="https://www.awwwards.com/" target="_blank">AWWWARDS</a></li>
+          <li><a href="https://dribbble.com/" target="_blank">DRIBBBLE</a></li>
+          <li><a href="https://www.sveep.com/" target="_blank">SAVEE</a></li>
+        </ul>
+      </nav>
+    </main>
+    <div class="cursor fixed w-4 h-4 rounded-full bg-black pointer-events-none z-50 mix-blend-difference"></div>
+    <script defer type="module" src="/main.js"></script>
+  </body>
+</html>

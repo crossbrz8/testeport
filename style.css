@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --size-unit: 16;
+  --size-container-ideal: 1440;
+  --size-container-min: 992px;
+  --size-container-max: 1920px;
+  --size-container: clamp(var(--size-container-min), 100vw, var(--size-container-max));
+  --size-font: calc(var(--size-container) / (var(--size-container-ideal) / var(--size-unit)));
+}
+
+@media screen and (max-width: 991px) {
+  :root {
+    --size-container-ideal: 834;
+    --size-container-min: 768px;
+    --size-container-max: 991px;
+  }
+}
+
+@font-face {
+  font-family: 'HelveticaNeue';
+  src: url('/font/HelveticaNeue-Roman.otf') format('opentype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'MartianMono';
+  src: url('/font/MartianMono-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Roslindale';
+  src: url('/font/Roslindale-DisplayCondensedRegular-Testing.woff') format('woff');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Roslindale';
+  src: url('/font/Roslindale-DisplayCondensedSemiBold-Testing.woff') format('woff');
+  font-weight: 600;
+}
+
+dialog {
+  margin: 0;
+  border: none;
+  background: transparent;
+  scrollbar-width: thin;
+  scrollbar-color: #C0CAC2 transparent;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+dialog::-webkit-scrollbar {
+  width: 4px;
+}
+
+dialog::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+dialog::-webkit-scrollbar-thumb {
+  background-color: #C0CAC2;
+  border-radius: 9999px;
+}
+
+.dividerModal {
+  background-color: rgba(192, 202, 194, 0.2);
+  height: 1px;
+}
+
+.divider {
+  background-color: rgba(92, 102, 94, 0.4);
+  height: 1px;
+  border: none;
+}
+
+.close-dialog {
+  padding: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.close-dialog:hover {
+  opacity: 0.7;
+}
+
+.splitting .word {
+    display: inline-block;
+    will-change: transform;
+    transform: translateX(0);
+    
+}
+
+@keyframes moveLines {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100px);
+  }
+}
+
+.moving-lines {
+  animation: moveLines 10s linear infinite;
+}
+
+.main-loader {
+  overflow: hidden;
+}
+
+[data-splitting][data-splitting-type="chars"] .char {
+  display: inline-block;
+  will-change: transform;
+}
+
+.char {
+  transform-origin: bottom;
+  display: inline-block;
+  position: relative;
+}
