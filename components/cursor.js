@@ -1,5 +1,5 @@
 import { gsap } from 'gsap';
-import { projects } from '../data.js';
+import { fetchProjects } from '../data.js';
 
 export function initCursor() {
   const cursorItem = document.querySelector(".container-projects .cursor");
@@ -60,29 +60,33 @@ export function initCursor() {
     }
   };
 
-  const handleProjectHover = (e) => {
+  const handleProjectHover = async (e) => {
     const projectItem = e.currentTarget;
     if (!projectItem) return;
     
     currentProject = projectItem;
-    // Find the original index (before cloning)
     const projectLi = projectItem.closest('li');
     const allLis = Array.from(projectsContainer.querySelectorAll('li'));
-    const index = allLis.indexOf(projectLi) % projects.length; // Use modulo to get original index
     
-    const projectTitle = projects[index]?.title;
-    
-    isHoveringProject = true;
-    cursorParagraph.textContent = projectTitle;
-    
-    lastX = currentX = e.clientX;
-    lastY = currentY = e.clientY;
-    
-    gsap.set(cursorItem, { x: currentX, y: currentY });
-    cursorTimeline.play();
-    
-    if (!rafId) {
-      rafId = requestAnimationFrame(updateCursorPosition);
+    try {
+      const projects = await fetchProjects();
+      const index = allLis.indexOf(projectLi) % projects.length;
+      const projectTitle = projects[index]?.title;
+      
+      isHoveringProject = true;
+      cursorParagraph.textContent = projectTitle;
+      
+      lastX = currentX = e.clientX;
+      lastY = currentY = e.clientY;
+      
+      gsap.set(cursorItem, { x: currentX, y: currentY });
+      cursorTimeline.play();
+      
+      if (!rafId) {
+        rafId = requestAnimationFrame(updateCursorPosition);
+      }
+    } catch (error) {
+      console.error('Error fetching project for cursor:', error);
     }
   };
 

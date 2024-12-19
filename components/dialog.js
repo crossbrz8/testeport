@@ -1,5 +1,5 @@
 import { gsap } from 'gsap';
-import { projects } from '../data.js';
+import { fetchProjects } from '../data.js';
 
 export function initProjectDialog() {
   const dialog = document.querySelector('#project-dialog');
@@ -67,7 +67,7 @@ export function initProjectDialog() {
     if (!project) return;
     dialog.querySelector('.project-title').textContent = project.title;
     dialog.querySelector('.project-year').textContent = project.year;
-    dialog.querySelector('.project-roles').textContent = project.roles;
+    dialog.querySelector('.project-roles').textContent = project.role;
     
     const imagesContainer = dialog.querySelector('.project-images');
     imagesContainer.innerHTML = `
@@ -114,14 +114,21 @@ export function initProjectDialog() {
     launchButton.addEventListener('mouseleave', () => hoverAnimation.reverse());
   }
 
-  function handleProjectClick(e) {
+  async function handleProjectClick(e) {
     const projectItem = e.target.closest('.project-item');
     if (!projectItem) return;
     
     const index = parseInt(projectItem.dataset.projectIndex, 10);
-    if (isNaN(index) || !projects[index]) return;
+    if (isNaN(index)) return;
     
-    openDialog(projects[index]);
+    try {
+      const projects = await fetchProjects();
+      if (!projects[index]) return;
+      
+      openDialog(projects[index]);
+    } catch (error) {
+      console.error('Error fetching project for dialog:', error);
+    }
   }
 
   function openDialog(project) {

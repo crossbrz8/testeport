@@ -6,7 +6,7 @@ import { initProjectDialog } from './components/dialog';
 import { disableScroll, enableScroll } from './components/scroll';
 import './style.css';
 import Column from './components/column.js';
-import { projects } from './data.js';
+import { fetchProjects } from './data.js';
 import Swiper from 'swiper';
 import { Navigation, Pagination } from 'swiper/modules';
 import { initDistortion } from './components/distortion'
@@ -25,39 +25,52 @@ async function renderProjects() {
   const projectsList = document.querySelector('#projects ul');
   if (!projectsList) return;
 
-  const fragment = document.createDocumentFragment();
-  
-  projects.forEach((project, index) => {
-    const li = document.createElement('li');
-    li.className = 'w-full swiper-slide';
-    li.innerHTML = `
-      <button class="project-item flex flex-col items-center justify-center gap-2.5" data-project-index="${index}">
-        <picture class="w-[140px] h-[140px] sm:w-full md:w-[120px] md:h-[120px] xl:w-[200px] xl:h-[200px] aspect-square block">
-          <source media="(min-width: 768px)" srcset="${project.image}">
-          <img
-            data-webgl-media 
-            data-project-index="${index}"
-            src="${project.image}" 
-            alt="${project.title}" 
-            loading="eager"
-            class="w-full h-full object-cover invisible sm:visible"
-          >
-        </picture>
-        <span class="uppercase md:hidden">${project.title}</span>
-      </button>
-    `;
-    fragment.appendChild(li);
-  });
-  
-  projectsList.textContent = '';
-  projectsList.appendChild(fragment);
-
-  // After rendering, initialize distortion for all project images
-  const projectImages = document.querySelectorAll('[data-webgl-media]');
-  if (projectImages.length > 0) {
-    initDistortion({
-      scrollState: sharedScrollState
+  try {
+    const projects = await fetchProjects();
+    console.log('Rendering projects:', projects);
+    
+    const fragment = document.createDocumentFragment();
+    
+    projects.forEach((project, index) => {
+      const li = document.createElement('li');
+      li.className = 'w-full swiper-slide';
+      
+      // Use a default image if project.image is missing
+      const imageUrl = project.image;
+      
+      li.innerHTML = `
+        <button class="project-item flex flex-col items-center justify-center gap-2.5" data-project-index="${index}">
+          <picture class="w-[140px] h-[140px] sm:w-full md:w-[120px] md:h-[120px] xl:w-[200px] xl:h-[200px] aspect-square block">
+            <source media="(min-width: 768px)" srcset="${imageUrl}">
+            <img
+              data-webgl-media 
+              data-project-index="${index}"
+              src="${imageUrl}" 
+              alt="${project.title || 'Project image'}" 
+              loading="eager"
+              crossorigin="anonymous"
+              class="w-full h-full object-cover invisible sm:visible"
+              onerror="this.onerror=null; this.src='/images/placeholder.jpg';"
+            >
+          </picture>
+          <span class="uppercase md:hidden">${project.title || 'Untitled Project'}</span>
+        </button>
+      `;
+      fragment.appendChild(li);
     });
+    
+    projectsList.textContent = '';
+    projectsList.appendChild(fragment);
+
+    // After rendering, initialize distortion
+    const projectImages = document.querySelectorAll('[data-webgl-media]');
+    if (projectImages.length > 0) {
+      initDistortion({
+        scrollState: sharedScrollState
+      });
+    }
+  } catch (error) {
+    console.error('Error rendering projects:', error);
   }
 }
 
@@ -65,50 +78,65 @@ async function preloadAssets() {
   // Initialize Splitting first
   Splitting();
 
-  // Preload all project images
-  const imagePromises = projects.map(project => {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.onload = () => resolve(img);
-      img.onerror = reject;
-      img.src = project.image;
-    });
-  });
-
-  // Render projects while loading
-  await renderProjects();
-
-  // Initialize columns early
-  if (window.innerWidth > 768) {
-    const bioSection = document.querySelector('#bio-section');
-    const projectsSection = document.querySelector('#projects');
-    
-    if (bioSection) {
-      new Column({
-        el: bioSection,
-        reverse: false,
-        scrollState: sharedScrollState
-      });
-    }
-
-    if (projectsSection) {
-      new Column({
-        el: projectsSection.querySelector('.container-projects'),
-        reverse: true,
-        scrollState: sharedScrollState
-      });
-    }
-  }
-
-  // Initialize Three.js and distortion
-  const distortionPromise = initDistortion({ scrollState: sharedScrollState });
-
   try {
-    // Wait for all assets to load
-    await Promise.all([...imagePromises, distortionPromise]);
-    return true;
+    const projects = await fetchProjects();
+    console.log('Fetched projects:', projects); // Debug log
+    
+    // Preload all project images
+    const imagePromises = projects.map(project => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          console.log(`Successfully loaded image: ${project.image}`);
+          resolve(img);
+        };
+        img.onerror = () => {
+          console.warn(`Failed to load image: ${project.image}`);
+          resolve();
+        };
+        img.src = project.image;
+      });
+    });
+
+    // Render projects while loading
+    await renderProjects();
+
+    // Initialize columns early
+    if (window.innerWidth > 768) {
+      const bioSection = document.querySelector('#bio-section');
+      const projectsSection = document.querySelector('#projects');
+      
+      if (bioSection) {
+        new Column({
+          el: bioSection,
+          reverse: false,
+          scrollState: sharedScrollState
+        });
+      }
+
+      if (projectsSection) {
+        new Column({
+          el: projectsSection.querySelector('.container-projects'),
+          reverse: true,
+          scrollState: sharedScrollState
+        });
+      }
+    }
+
+    // Initialize Three.js and distortion
+    const distortionPromise = initDistortion({ scrollState: sharedScrollState });
+
+    try {
+      // Wait for all assets to load
+      await Promise.all([...imagePromises, distortionPromise]);
+      return true;
+    } catch (error) {
+      console.error('Error in Promise.all:', error);
+      return false;
+    }
   } catch (error) {
-    console.error('Error preloading assets:', error);
+    console.error('Error in preloadAssets:', error);
     return false;
   }
 }
